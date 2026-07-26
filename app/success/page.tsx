@@ -4,15 +4,34 @@
 import Link from "next/link";
 
 export default function SuccessPage() {
-  const link = process.env.NEXT_PUBLIC_WHATSAPP_GROUP_LINK || "";
+  const whatsappLink = process.env.NEXT_PUBLIC_WHATSAPP_GROUP_LINK || "";
+  const instagramLink = process.env.NEXT_PUBLIC_INSTAGRAM_URL || "";
 
+  // --- WHATSAPP HANDLER ---
   const handleWhatsAppClick = (e) => {
-    if (link && link !== "#" && link.startsWith("http")) {
-      window.open(link, "_blank", "noopener,noreferrer");
+    if (
+      whatsappLink &&
+      whatsappLink !== "#" &&
+      whatsappLink.startsWith("http")
+    ) {
+      window.open(whatsappLink, "_blank", "noopener,noreferrer");
     } else {
       alert(
         "⚠️ WhatsApp group link not configured. Please contact the club admin.",
       );
+    }
+  };
+
+  // --- INSTAGRAM HANDLER (NEW) ---
+  const handleInstagramClick = (e) => {
+    if (
+      instagramLink &&
+      instagramLink !== "#" &&
+      instagramLink.startsWith("http")
+    ) {
+      window.open(instagramLink, "_blank", "noopener,noreferrer");
+    } else {
+      alert("⚠️ Instagram link not configured. Please contact the club admin.");
     }
   };
 
@@ -24,7 +43,7 @@ export default function SuccessPage() {
       </div>
 
       <div className="cyber-card" style={{ textAlign: "center" }}>
-        {/* Logo */}
+        {/* Logo - Centered */}
         <div
           style={{
             display: "flex",
@@ -86,7 +105,7 @@ export default function SuccessPage() {
               fontSize: "0.875rem",
             }}
           >
-            📱 Join Our Community
+            📱 Connect With Us
           </p>
           <p
             style={{
@@ -95,29 +114,80 @@ export default function SuccessPage() {
               marginTop: "0.25rem",
             }}
           >
-            Connect with fellow tech enthusiasts
+            Join our community & follow us on social media
           </p>
         </div>
 
-        <button
-          onClick={handleWhatsAppClick}
-          className="cyber-btn"
-          style={{
-            textAlign: "center",
-            display: "block",
-            textDecoration: "none",
-            cursor: "pointer",
-          }}
+        {/* --- BUTTONS CONTAINER --- */}
+        <div
+          style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}
         >
-          📱 Join WhatsApp Group
-        </button>
+          {/* 1. WHATSAPP BUTTON (Existing - Green/Cyan Theme) */}
+          <button
+            onClick={handleWhatsAppClick}
+            className="cyber-btn"
+            style={{
+              textAlign: "center",
+              display: "block",
+              textDecoration: "none",
+              cursor: "pointer",
+              background:
+                "linear-gradient(135deg, rgba(0, 245, 255, 0.15), rgba(0, 200, 150, 0.15))",
+              borderColor: "rgba(0, 245, 255, 0.3)",
+            }}
+          >
+            📱 Join WhatsApp Group
+          </button>
 
-        {/* ===== CHANGED: Go to Registration page ===== */}
+          {/* 2. INSTAGRAM BUTTON (NEW - Neon Pink/Purple Theme) */}
+          <button
+            onClick={handleInstagramClick}
+            style={{
+              textAlign: "center",
+              display: "block",
+              textDecoration: "none",
+              cursor: "pointer",
+              width: "100%",
+              padding: "0.75rem 1.5rem",
+              borderRadius: "0.75rem",
+              background:
+                "linear-gradient(135deg, rgba(255, 0, 150, 0.15), rgba(180, 77, 255, 0.15))",
+              border: "1px solid rgba(255, 0, 150, 0.25)",
+              color: "#ffffff",
+              fontSize: "0.875rem",
+              fontWeight: "600",
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              transition: "all 0.3s ease",
+              fontFamily: "inherit",
+              backdropFilter: "blur(4px)",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background =
+                "linear-gradient(135deg, rgba(255, 0, 150, 0.3), rgba(180, 77, 255, 0.3))";
+              e.currentTarget.style.borderColor = "rgba(255, 0, 150, 0.5)";
+              e.currentTarget.style.boxShadow =
+                "0 0 50px rgba(255, 0, 150, 0.15)";
+              e.currentTarget.style.transform = "translateY(-2px)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background =
+                "linear-gradient(135deg, rgba(255, 0, 150, 0.15), rgba(180, 77, 255, 0.15))";
+              e.currentTarget.style.borderColor = "rgba(255, 0, 150, 0.25)";
+              e.currentTarget.style.boxShadow = "none";
+              e.currentTarget.style.transform = "translateY(0px)";
+            }}
+          >
+            📸 Follow on Instagram
+          </button>
+        </div>
+
+        {/* Back to Home Link */}
         <Link
           href="/register"
           style={{
             display: "block",
-            marginTop: "0.75rem",
+            marginTop: "1.5rem",
             color: "rgba(0,245,255,0.3)",
             fontSize: "0.75rem",
             textDecoration: "none",
