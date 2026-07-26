@@ -4,9 +4,9 @@
 import Link from "next/link";
 
 export default function SuccessPage() {
-  const whatsappLink = process.env.NEXT_PUBLIC_WHATSAPP_GROUP_LINK || "";
-  const instagramLink = process.env.NEXT_PUBLIC_INSTAGRAM_URL || "";
-
+  const whatsappLink = "https://chat.whatsapp.com/I5ZQSfs2mnpD04jdyqMGkC";
+  const instagramLink =
+    "https://www.instagram.com/delitech.it_?igsh=MnBiOXBucTV4aXo5";
   // --- WHATSAPP HANDLER ---
   const handleWhatsAppClick = (e) => {
     if (
