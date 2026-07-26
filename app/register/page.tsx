@@ -42,11 +42,10 @@ export default function RegisterPage() {
     setFileError("");
 
     if (selectedFile) {
-      // 1 MB = 1,048,576 bytes
       const maxSize = 1 * 1024 * 1024;
       if (selectedFile.size > maxSize) {
         setFileError("❌ File is too large. Please upload a photo under 1 MB.");
-        e.target.value = ""; // reset input
+        e.target.value = "";
         setFile(null);
         return;
       }
@@ -233,7 +232,7 @@ export default function RegisterPage() {
             )}
           </div>
 
-          {/* ===== UPDATED FILE INPUT WITH CUSTOM MESSAGE & VALIDATION ===== */}
+          {/* File Input with Validation */}
           <div style={{ marginTop: "0.5rem" }}>
             <label className="cyber-label" style={{ marginBottom: "0.25rem" }}>
               📸 Upload Photo (max 1 MB)
