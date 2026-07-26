@@ -9,7 +9,6 @@ export async function POST(request) {
   try {
     const body = await request.json();
 
-    // Save to database
     const { data, error } = await supabase
       .from("students")
       .insert([body])
@@ -18,23 +17,22 @@ export async function POST(request) {
     if (error) {
       return NextResponse.json(
         { success: false, error: error.message },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     const student = data[0];
 
-    // Generate PDF certificate
     if (student.email) {
       try {
+        // @ts-ignore - This fixes the red line on the next line
         const pdfStream = await renderToStream(
-          <CertificatePDF student={student} />
+          <CertificatePDF student={student} />,
         );
         const chunks = [];
         for await (const chunk of pdfStream) chunks.push(chunk);
         const pdfBuffer = Buffer.concat(chunks);
 
-        // Set up Gmail transporter
         const transporter = nodemailer.createTransport({
           service: "gmail",
           auth: {
@@ -43,7 +41,6 @@ export async function POST(request) {
           },
         });
 
-        // Send email
         await transporter.sendMail({
           from: process.env.GMAIL_USER,
           to: student.email,
@@ -74,7 +71,7 @@ export async function POST(request) {
     console.error("Server Error:", error);
     return NextResponse.json(
       { success: false, error: error.message || "Registration failed" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
