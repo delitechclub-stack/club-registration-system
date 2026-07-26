@@ -1,16 +1,9 @@
 // @ts-nocheck
 import { supabase } from "@/lib/supabase";
 import { NextResponse } from "next/server";
+import { renderToStream } from "@react-pdf/renderer";
+import CertificatePDF from "@/components/CertificatePDF";
 import nodemailer from "nodemailer";
-
-// Create Gmail transporter
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_APP_PASSWORD,
-  },
-});
 
 export async function POST(request) {
   try {
@@ -25,29 +18,52 @@ export async function POST(request) {
     if (error) {
       return NextResponse.json(
         { success: false, error: error.message },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
     const student = data[0];
 
-    // Send email via Gmail
-    if (student.email && process.env.GMAIL_USER) {
+    // Generate PDF certificate
+    if (student.email) {
       try {
+        const pdfStream = await renderToStream(
+          <CertificatePDF student={student} />
+        );
+        const chunks = [];
+        for await (const chunk of pdfStream) chunks.push(chunk);
+        const pdfBuffer = Buffer.concat(chunks);
+
+        // Set up Gmail transporter
+        const transporter = nodemailer.createTransport({
+          service: "gmail",
+          auth: {
+            user: process.env.GMAIL_USER,
+            pass: process.env.GMAIL_APP_PASSWORD,
+          },
+        });
+
+        // Send email
         await transporter.sendMail({
           from: process.env.GMAIL_USER,
           to: student.email,
           subject: "🎉 Welcome to DELITECH IT Club!",
           html: `
-            <h1>Welcome to DELITECH IT Club!</h1>
-            <p>Thank you for registering, ${student.name}.</p>
-            <p>You are now part of our community.</p>
-            <p>Stay connected with us:</p>
+            <h1>Welcome, ${student.name}!</h1>
+            <p>Thank you for registering for DELITECH IT Club.</p>
+            <p>Your digital certificate is attached to this email.</p>
+            <p>Stay connected with us!</p>
             <p>📱 WhatsApp: ${process.env.NEXT_PUBLIC_WHATSAPP_GROUP_LINK || "Coming soon"}</p>
           `,
+          attachments: [
+            {
+              filename: `Certificate_${student.name.replace(/\s/g, "_")}.pdf`,
+              content: pdfBuffer,
+            },
+          ],
         });
 
-        console.log(`✅ Welcome email sent to ${student.email}`);
+        console.log(`✅ Email sent to ${student.email}`);
       } catch (emailError) {
         console.error("❌ Email error:", emailError);
       }
@@ -58,7 +74,7 @@ export async function POST(request) {
     console.error("Server Error:", error);
     return NextResponse.json(
       { success: false, error: error.message || "Registration failed" },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
