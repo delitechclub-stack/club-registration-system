@@ -4,35 +4,17 @@
 import Link from "next/link";
 
 export default function SuccessPage() {
+  // HARDCODED LINKS - These will work immediately
   const whatsappLink = "https://chat.whatsapp.com/I5ZQSfs2mnpD04jdyqMGkC";
   const instagramLink =
     "https://www.instagram.com/delitech.it_?igsh=MnBiOXBucTV4aXo5";
-  // --- WHATSAPP HANDLER ---
-  const handleWhatsAppClick = (e) => {
-    if (
-      whatsappLink &&
-      whatsappLink !== "#" &&
-      whatsappLink.startsWith("http")
-    ) {
-      window.open(whatsappLink, "_blank", "noopener,noreferrer");
-    } else {
-      alert(
-        "⚠️ WhatsApp group link not configured. Please contact the club admin.",
-      );
-    }
+
+  const handleWhatsAppClick = () => {
+    window.open(whatsappLink, "_blank", "noopener,noreferrer");
   };
 
-  // --- INSTAGRAM HANDLER (NEW) ---
-  const handleInstagramClick = (e) => {
-    if (
-      instagramLink &&
-      instagramLink !== "#" &&
-      instagramLink.startsWith("http")
-    ) {
-      window.open(instagramLink, "_blank", "noopener,noreferrer");
-    } else {
-      alert("⚠️ Instagram link not configured. Please contact the club admin.");
-    }
+  const handleInstagramClick = () => {
+    window.open(instagramLink, "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -43,7 +25,7 @@ export default function SuccessPage() {
       </div>
 
       <div className="cyber-card" style={{ textAlign: "center" }}>
-        {/* Logo - Centered */}
+        {/* Logo */}
         <div
           style={{
             display: "flex",
@@ -118,11 +100,10 @@ export default function SuccessPage() {
           </p>
         </div>
 
-        {/* --- BUTTONS CONTAINER --- */}
+        {/* Buttons */}
         <div
           style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}
         >
-          {/* 1. WHATSAPP BUTTON (Existing - Green/Cyan Theme) */}
           <button
             onClick={handleWhatsAppClick}
             className="cyber-btn"
@@ -139,7 +120,6 @@ export default function SuccessPage() {
             📱 Join WhatsApp Group
           </button>
 
-          {/* 2. INSTAGRAM BUTTON (NEW - Neon Pink/Purple Theme) */}
           <button
             onClick={handleInstagramClick}
             style={{
@@ -182,7 +162,6 @@ export default function SuccessPage() {
           </button>
         </div>
 
-        {/* Back to Home Link */}
         <Link
           href="/register"
           style={{
