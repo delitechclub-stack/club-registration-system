@@ -629,19 +629,15 @@ select.cyber-select {
     padding: 0.25rem 0.5rem !important;
   }
 }
-/* ===== IPHONE FIXES ===== */
-@supports (-webkit-touch-callout: none) {
-  .cyber-page {
-    min-height: -webkit-fill-available !important;
-  }
-}
-.cyber-card, .glass-card, .dashboard-section {
-  -webkit-backdrop-filter: blur(20px) !important;
-  backdrop-filter: blur(20px) !important;
-}
+/* ===== IPHONE FORM FIX ===== */
 input, select, textarea {
-  font-size: 16px !important;
+  background: #0f0f1e !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(0, 245, 255, 0.2) !important;
 }
-button, a {
-  -webkit-tap-highlight-color: transparent;
+input::placeholder, textarea::placeholder {
+  color: rgba(255, 255, 255, 0.4) !important;
+}
+.cyber-card {
+  background: #0f0f1e !important;
 }
