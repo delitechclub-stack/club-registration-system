@@ -4,17 +4,16 @@
 import Link from "next/link";
 
 export default function SuccessPage() {
-  // HARDCODED LINKS - These will work immediately
-  const whatsappLink = "https://chat.whatsapp.com/I5ZQSfs2mnpD04jdyqMGkC";
-  const instagramLink =
-    "https://www.instagram.com/delitech.it_?igsh=MnBiOXBucTV4aXo5";
-
-  const handleWhatsAppClick = () => {
-    window.open(whatsappLink, "_blank", "noopener,noreferrer");
+  // HARDCODED – NO conditionals, NO alerts
+  const handleWhatsApp = () => {
+    window.open("https://chat.whatsapp.com/I5ZQSfs2mnpD04jdyqMGkC", "_blank");
   };
 
-  const handleInstagramClick = () => {
-    window.open(instagramLink, "_blank", "noopener,noreferrer");
+  const handleInstagram = () => {
+    window.open(
+      "https://www.instagram.com/delitech.it_?igsh=MnBiOXBucTV4aXo5",
+      "_blank",
+    );
   };
 
   return (
@@ -67,15 +66,6 @@ export default function SuccessPage() {
         <h1 className="cyber-heading" style={{ fontSize: "2.5rem" }}>
           Welcome Aboard!
         </h1>
-        <p
-          style={{
-            color: "rgba(255,0,0,0.5)",
-            fontSize: "0.7rem",
-            marginTop: "0.5rem",
-          }}
-        >
-          Build: {new Date().toISOString()}
-        </p>
         <p className="cyber-subtitle" style={{ marginBottom: "1.5rem" }}>
           You're now part of the future
         </p>
@@ -109,12 +99,11 @@ export default function SuccessPage() {
           </p>
         </div>
 
-        {/* Buttons */}
         <div
           style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}
         >
           <button
-            onClick={handleWhatsAppClick}
+            onClick={handleWhatsApp}
             className="cyber-btn"
             style={{
               textAlign: "center",
@@ -130,7 +119,7 @@ export default function SuccessPage() {
           </button>
 
           <button
-            onClick={handleInstagramClick}
+            onClick={handleInstagram}
             style={{
               textAlign: "center",
               display: "block",
