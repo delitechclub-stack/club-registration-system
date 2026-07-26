@@ -1,14 +1,22 @@
 // @ts-nocheck
 import { supabase } from "@/lib/supabase";
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Create Gmail transporter
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_APP_PASSWORD,
+  },
+});
 
 export async function POST(request) {
   try {
     const body = await request.json();
 
+    // Save to database
     const { data, error } = await supabase
       .from("students")
       .insert([body])
@@ -23,17 +31,19 @@ export async function POST(request) {
 
     const student = data[0];
 
-    // Send simple welcome email (NO CERTIFICATE)
-    if (student.email && process.env.RESEND_API_KEY) {
+    // Send email via Gmail
+    if (student.email && process.env.GMAIL_USER) {
       try {
-        await resend.emails.send({
-          from: "DELITECH IT Club <onboarding@resend.dev>",
-          to: [student.email],
+        await transporter.sendMail({
+          from: process.env.GMAIL_USER,
+          to: student.email,
           subject: "🎉 Welcome to DELITECH IT Club!",
           html: `
             <h1>Welcome to DELITECH IT Club!</h1>
             <p>Thank you for registering, ${student.name}.</p>
             <p>You are now part of our community.</p>
+            <p>Stay connected with us:</p>
+            <p>📱 WhatsApp: ${process.env.NEXT_PUBLIC_WHATSAPP_GROUP_LINK || "Coming soon"}</p>
           `,
         });
 
