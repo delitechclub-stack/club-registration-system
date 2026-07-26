@@ -629,3 +629,19 @@ select.cyber-select {
     padding: 0.25rem 0.5rem !important;
   }
 }
+/* ===== IPHONE FIXES ===== */
+@supports (-webkit-touch-callout: none) {
+  .cyber-page {
+    min-height: -webkit-fill-available !important;
+  }
+}
+.cyber-card, .glass-card, .dashboard-section {
+  -webkit-backdrop-filter: blur(20px) !important;
+  backdrop-filter: blur(20px) !important;
+}
+input, select, textarea {
+  font-size: 16px !important;
+}
+button, a {
+  -webkit-tap-highlight-color: transparent;
+}

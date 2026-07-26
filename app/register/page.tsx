@@ -126,7 +126,10 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="cyber-page">
+    <div
+      className="cyber-page"
+      style={{ minHeight: "100vh", minHeight: "-webkit-fill-available" }}
+    >
       <div className="cyber-bg-glow">
         <div className="glow-1"></div>
         <div className="glow-2"></div>
