@@ -1,23 +1,32 @@
 // @ts-nocheck
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
-
-const resend = new Resend(process.env.RESEND_API_KEY);
+import nodemailer from "nodemailer";
 
 export async function GET() {
+  const gmailUser = process.env.GMAIL_USER;
+  const gmailPass = process.env.GMAIL_APP_PASSWORD;
+
+  if (!gmailUser || !gmailPass) {
+    return NextResponse.json(
+      { success: false, error: "Missing GMAIL_USER or GMAIL_APP_PASSWORD" },
+      { status: 500 },
+    );
+  }
+
   try {
-    const { data, error } = await resend.emails.send({
-      from: "DELITECH IT Club <onboarding@resend.dev>",
-      to: ["your-email@gmail.com"], // Replace with your actual email
-      subject: "Test Email from DELITECH",
-      html: "<p>This is a test email to confirm Resend is working!</p>",
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: { user: gmailUser, pass: gmailPass },
     });
 
-    if (error) {
-      return NextResponse.json({ success: false, error }, { status: 500 });
-    }
+    const info = await transporter.sendMail({
+      from: gmailUser,
+      to: gmailUser,
+      subject: "✅ Test Email from DELITECH",
+      html: "<p>Test email from DELITECH IT Club!</p>",
+    });
 
-    return NextResponse.json({ success: true, data });
+    return NextResponse.json({ success: true, info });
   } catch (error) {
     return NextResponse.json(
       { success: false, error: error.message },
