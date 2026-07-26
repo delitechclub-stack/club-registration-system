@@ -67,6 +67,15 @@ export default function SuccessPage() {
         <h1 className="cyber-heading" style={{ fontSize: "2.5rem" }}>
           Welcome Aboard!
         </h1>
+        <p
+          style={{
+            color: "rgba(255,0,0,0.5)",
+            fontSize: "0.7rem",
+            marginTop: "0.5rem",
+          }}
+        >
+          Build: {new Date().toISOString()}
+        </p>
         <p className="cyber-subtitle" style={{ marginBottom: "1.5rem" }}>
           You're now part of the future
         </p>
