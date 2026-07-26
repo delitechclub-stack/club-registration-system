@@ -4,10 +4,7 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  // Ignore ESLint errors during build
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+  // ❌ eslint key REMOVED (no longer supported)
 };
 
 module.exports = nextConfig;
