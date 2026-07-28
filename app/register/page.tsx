@@ -207,13 +207,52 @@ export default function RegisterPage() {
             className="cyber-input"
             required
           />
-          <input
-            name="department"
-            placeholder="Department (e.g., BCA)"
-            onChange={handleChange}
-            className="cyber-input"
-            required
-          />
+          <div style={{ marginTop: "0.25rem" }}>
+            <span className="cyber-label">Select Department</span>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "0.5rem",
+                marginTop: "0.5rem",
+              }}
+            >
+              {["BCA", "BBA", "BCOM", "BA"].map((dept) => (
+                <label
+                  key={dept}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.3rem",
+                    padding: "0.4rem 0.8rem",
+                    borderRadius: "8px",
+                    cursor: "pointer",
+                    border:
+                      form.department === dept
+                        ? "2px solid rgba(0,245,255,0.8)"
+                        : "1px solid rgba(255,255,255,0.2)",
+                    background:
+                      form.department === dept
+                        ? "rgba(0,245,255,0.15)"
+                        : "rgba(255,255,255,0.05)",
+                    color: form.department === dept ? "#00f5ff" : "#ffffff",
+                    transition: "all 0.2s",
+                  }}
+                >
+                  <input
+                    type="radio"
+                    name="department"
+                    value={dept}
+                    checked={form.department === dept}
+                    onChange={handleChange}
+                    style={{ accentColor: "#00f5ff", cursor: "pointer" }}
+                    required
+                  />
+                  {dept}
+                </label>
+              ))}
+            </div>
+          </div>
           <input
             name="semester"
             type="number"
