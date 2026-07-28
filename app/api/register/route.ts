@@ -28,8 +28,7 @@ export async function POST(request) {
 
       // Check for duplicate key violation (Unique email constraint)
       if (error.code === "23505") {
-        errorMessage =
-          "This email is already registered. Please use a different email or log in.";
+        errorMessage = "You are already part of DELITECH IT CLUB.";
       }
 
       return NextResponse.json({ error: errorMessage }, { status: 400 });
