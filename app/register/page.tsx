@@ -112,12 +112,12 @@ export default function RegisterPage() {
         body: JSON.stringify(payload),
         headers: { "Content-Type": "application/json" },
       });
-
       if (res.ok) {
         router.push("/success");
       } else {
-        const errorText = await res.text();
-        alert("❌ Registration failed: " + errorText);
+        // Parse the JSON error we send from the backend
+        const errorData = await res.json();
+        alert("❌ " + errorData.error);
       }
     } catch (err) {
       alert("❌ Network error: " + err.message);
